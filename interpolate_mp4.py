@@ -62,7 +62,7 @@ def main():
         print('Invalid size, should be \'<width>x<height>\'')
         return 
     img_array = []
-    outname = '{}_{}x{}_{}fps_{}.mp4'.format(seq_name, width, height, args.out_fps, args.net)
+    outname = '{}_{}x{}_{}fps_{}.avi'.format(seq_name, width, height, args.out_fps, args.net)
     # writer = skvideo.io.FFmpegWriter(os.path.join(args.out_dir, outname) ,
     #     inputdict={
     #         '-r': str(args.out_fps)
