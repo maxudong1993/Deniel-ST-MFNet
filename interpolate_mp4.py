@@ -116,6 +116,8 @@ def main():
                 out = patch_maker.unfold_to_frame(patches_out)
             else:
                 out = model(frame0, frame1, frame2, frame3)
+        print('frame0 shape {}'.format(frame0.shape))
+        print('tensor2rgb frame0 shape {}'.format(tensor2rgb(frame0).shape))
 
         # write to output video
         if t == 0:
