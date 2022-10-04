@@ -88,14 +88,14 @@ def main():
     print('video fps is: {}'.format(video_fps))
     num_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
     for t in tqdm(range(0, num_frames-3)):
-        print('t: {}'.format(t))
-        print(' frame position before: {}'.format(video.get(cv2.CAP_PROP_POS_FRAMES)))
+        # print('t: {}'.format(t))
+        # print(' frame position before: {}'.format(video.get(cv2.CAP_PROP_POS_FRAMES)))
         video.set(cv2.CAP_PROP_POS_FRAMES, t)
         _, rawFrame0 = video.read()
         _, rawFrame1 = video.read()
         _, rawFrame2 = video.read()
         _, rawFrame3 = video.read()
-        print(' frame position after: {}'.format(video.get(cv2.CAP_PROP_POS_FRAMES)))
+        # print(' frame position after: {}'.format(video.get(cv2.CAP_PROP_POS_FRAMES)))
         print('Frame Format: {}. size: {}'.format(rawFrame0.__class__,rawFrame0.shape))
 
 
@@ -143,10 +143,11 @@ def main():
             # writer.writeFrame(tensor2rgb(frame3)[0])  # repeat the last frame
 
     video.release()
+    print('outname {}'.format(outname))
     cv2writer = cv2.VideoWriter(outname,cv2.VideoWriter_fourcc(*'DIVX'),args.out_fps,(width,height))
     for i in range(len(img_array)):
         cv2writer.write(img_array[i])
-    cv2.writer.release()
+    cv2writer.release()
     # writer.close()  # close the writer
 
 
