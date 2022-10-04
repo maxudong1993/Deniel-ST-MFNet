@@ -61,25 +61,23 @@ def main():
     except:
         print('Invalid size, should be \'<width>x<height>\'')
         return 
-
+    img_array = []
     outname = '{}_{}x{}_{}fps_{}.mp4'.format(seq_name, width, height, args.out_fps, args.net)
-    writer = skvideo.io.FFmpegWriter(os.path.join(args.out_dir, outname) ,
-        outputdict = {'-vcodec':'libx264', '-b': '300000000'}
-        # inputdict={
-        #     '-r': str(args.out_fps)
-        # },
-        # outputdict={
-        #     '-pix_fmt': 'yuv420p',
-        #     # '-c:v':'libx264',
-        #     '-s': '{}x{}'.format(width,height),
-        #     '-r': str(args.out_fps),
-        #     '-vcodec': 'libx264',  #use the h.264 codec
-        #     '-crf': '0',           #set the constant rate factor to 0, which is lossless
-        #     '-preset':'veryslow'   #the slower the better compression, in princple, try
-        #                            #other options see https://trac.ffmpeg.org/wiki/Encode/H.264
-        # }
-
-    )
+    # writer = skvideo.io.FFmpegWriter(os.path.join(args.out_dir, outname) ,
+    #     inputdict={
+    #         '-r': str(args.out_fps)
+    #     },
+    #     outputdict={
+    #         '-pix_fmt': 'yuv420p',
+    #         # '-c:v':'libx264',
+    #         '-s': '{}x{}'.format(width,height),
+    #         '-r': str(args.out_fps),
+    #         '-vcodec': 'libx264',  #use the h.264 codec
+    #         '-crf': '0',           #set the constant rate factor to 0, which is lossless
+    #         '-preset':'veryslow'   #the slower the better compression, in princple, try
+    #                                #other options see https://trac.ffmpeg.org/wiki/Encode/H.264
+    #     }
+    # )
 
     # Start interpolation
     print('Using model {} to upsample file {}'.format(args.net, fname))
@@ -124,16 +122,28 @@ def main():
 
         # write to output video
         if t == 0:
-            writer.writeFrame(tensor2rgb(frame0)[0])
-            writer.writeFrame(tensor2rgb(frame0)[0])  # repeat the first frame
-            writer.writeFrame(tensor2rgb(frame1)[0])
-        writer.writeFrame(tensor2rgb(out)[0])
-        writer.writeFrame(tensor2rgb(frame2)[0])
+            img_array.append(tensor2rgb(frame0)[0])
+            img_array.append(tensor2rgb(frame0)[0])
+            img_array.append(tensor2rgb(frame1)[0])
+            # writer.writeFrame(tensor2rgb(frame0)[0])
+            # writer.writeFrame(tensor2rgb(frame0)[0])  # repeat the first frame
+            # writer.writeFrame(tensor2rgb(frame1)[0])
+        img_array.append(tensor2rgb(out)[0])
+        img_array.append(tensor2rgb(frame2)[0])
+        # writer.writeFrame(tensor2rgb(out)[0])
+        # writer.writeFrame(tensor2rgb(frame2)[0])
         if t == num_frames - 4:
-            writer.writeFrame(tensor2rgb(frame3)[0])
-            writer.writeFrame(tensor2rgb(frame3)[0])  # repeat the last frame
+            img_array.append(tensor2rgb(frame3)[0])
+            img_array.append(tensor2rgb(frame3)[0])
+            # writer.writeFrame(tensor2rgb(frame3)[0])
+            # writer.writeFrame(tensor2rgb(frame3)[0])  # repeat the last frame
+
     video.release()
-    writer.close()  # close the writer
+    cv2writer = cv2.VideoWriter(outname,cv2.VideoWriter_fourcc(*'DIVX'),args.out_fps,(width,height))
+    for i in range(len(img_array)):
+        cv2writer.write(img_array[i])
+    cv2.writer.release()
+    # writer.close()  # close the writer
 
 
 if __name__ == "__main__":
