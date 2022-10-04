@@ -51,7 +51,7 @@ def main():
     if not os.path.exists(args.out_dir):
         os.makedirs(args.out_dir)
     _, fname = os.path.split(args.mp4_path)
-    seq_name = fname.split('-')[0]
+    seq_name = fname.split('.')[0]
     width, height = args.size.split('x')
     # bit_depth = 16 if '16bit' in fname else 10 if '10bit' in fname else 8
     # pix_fmt = '444' if '444' in fname else '420'
@@ -68,11 +68,11 @@ def main():
             '-r': str(args.out_fps)
         },
         outputdict={
-            '-pix_fmt': 'yuv444p',
-            '-c:v':'libx264',
+            '-pix_fmt': 'yuv420p',
+            # '-c:v':'libx264',
             '-s': '{}x{}'.format(width,height),
             '-r': str(args.out_fps),
-            # '-vcodec': 'libx264',  #use the h.264 codec
+            '-vcodec': 'libx264',  #use the h.264 codec
             '-crf': '0',           #set the constant rate factor to 0, which is lossless
             '-preset':'veryslow'   #the slower the better compression, in princple, try
                                    #other options see https://trac.ffmpeg.org/wiki/Encode/H.264
@@ -117,8 +117,8 @@ def main():
                 out = patch_maker.unfold_to_frame(patches_out)
             else:
                 out = model(frame0, frame1, frame2, frame3)
-        print('frame0 shape {}'.format(frame0.shape))
-        print('tensor2rgb frame0 shape {}'.format(tensor2rgb(frame0).shape))
+        # print('frame0 shape {}'.format(frame0.shape))
+        # print('tensor2rgb frame0 shape {}'.format(tensor2rgb(frame0).shape))
 
         # write to output video
         if t == 0:
