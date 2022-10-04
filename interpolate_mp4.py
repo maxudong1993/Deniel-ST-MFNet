@@ -88,6 +88,9 @@ def main():
     print('video fps is: {}'.format(video_fps))
     num_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
     for t in tqdm(range(0, num_frames-3)):
+        print(' frame position before: {}'.format(cv2.CAP_PROP_POS_FRAMES))
+        video.set(cv2.CAP_PROP_POS_FRAMES, t)
+        print(' frame position after: {}'.format(cv2.CAP_PROP_POS_FRAMES))
         _, rawFrame0 = video.read()
         _, rawFrame1 = video.read()
         _, rawFrame2 = video.read()
