@@ -68,7 +68,7 @@ def main():
             '-r': str(args.out_fps)
         },
         outputdict={
-            '-pix_fmt': 'yuv420p',
+            '-pix_fmt': 'yuv444p',
             '-c:v':'libx264',
             '-s': '{}x{}'.format(width,height),
             '-r': str(args.out_fps),
