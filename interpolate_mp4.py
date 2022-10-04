@@ -64,19 +64,21 @@ def main():
 
     outname = '{}_{}x{}_{}fps_{}.mp4'.format(seq_name, width, height, args.out_fps, args.net)
     writer = skvideo.io.FFmpegWriter(os.path.join(args.out_dir, outname) ,
-        inputdict={
-            '-r': str(args.out_fps)
-        },
-        outputdict={
-            '-pix_fmt': 'yuv420p',
-            # '-c:v':'libx264',
-            '-s': '{}x{}'.format(width,height),
-            '-r': str(args.out_fps),
-            '-vcodec': 'libx264',  #use the h.264 codec
-            '-crf': '0',           #set the constant rate factor to 0, which is lossless
-            '-preset':'veryslow'   #the slower the better compression, in princple, try
-                                   #other options see https://trac.ffmpeg.org/wiki/Encode/H.264
-        }
+        outputdict = {'-vcodec':'libx264', '-b': '300000000'}
+        # inputdict={
+        #     '-r': str(args.out_fps)
+        # },
+        # outputdict={
+        #     '-pix_fmt': 'yuv420p',
+        #     # '-c:v':'libx264',
+        #     '-s': '{}x{}'.format(width,height),
+        #     '-r': str(args.out_fps),
+        #     '-vcodec': 'libx264',  #use the h.264 codec
+        #     '-crf': '0',           #set the constant rate factor to 0, which is lossless
+        #     '-preset':'veryslow'   #the slower the better compression, in princple, try
+        #                            #other options see https://trac.ffmpeg.org/wiki/Encode/H.264
+        # }
+
     )
 
     # Start interpolation
