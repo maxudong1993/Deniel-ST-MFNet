@@ -89,13 +89,13 @@ def main():
     num_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
     for t in tqdm(range(0, num_frames-3)):
         print('t: {}'.format(t))
-        # print(' frame position before: {}'.format(cv2.CAP_PROP_POS_FRAMES))
-        video.set(cv2.CAP_PROP_POS_FRAMES, t)
-        # print(' frame position after: {}'.format(cv2.CAP_PROP_POS_FRAMES))
+        print(' frame position before: {}'.format(cv2.CAP_PROP_POS_FRAMES))
+        # video.set(cv2.CAP_PROP_POS_FRAMES, t)
         _, rawFrame0 = video.read()
         _, rawFrame1 = video.read()
         _, rawFrame2 = video.read()
         _, rawFrame3 = video.read()
+        print(' frame position after: {}'.format(cv2.CAP_PROP_POS_FRAMES))
         print('Frame Format: {}. size: {}'.format(rawFrame0.__class__,rawFrame0.shape))
 
 
