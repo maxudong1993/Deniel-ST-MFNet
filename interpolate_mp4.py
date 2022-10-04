@@ -91,7 +91,7 @@ def main():
         _, rawFrame1 = video.read()
         _, rawFrame2 = video.read()
         _, rawFrame3 = video.read()
-        print('Frame Format: {}. size: {}'.format(rawFrame0.__class__),rawFrame0.shape)
+        print('Frame Format: {}. size: {}'.format(rawFrame0.__class__,rawFrame0.shape))
 
 
         frame0 = TF.to_tensor(rawFrame0)[None, ...].cuda()
