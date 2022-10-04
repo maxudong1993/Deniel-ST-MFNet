@@ -69,9 +69,10 @@ def main():
         },
         outputdict={
             '-pix_fmt': 'yuv420p',
+            '-c:v':'libx264',
             '-s': '{}x{}'.format(width,height),
             '-r': str(args.out_fps),
-            '-vcodec': 'libx264',  #use the h.264 codec
+            # '-vcodec': 'libx264',  #use the h.264 codec
             '-crf': '0',           #set the constant rate factor to 0, which is lossless
             '-preset':'veryslow'   #the slower the better compression, in princple, try
                                    #other options see https://trac.ffmpeg.org/wiki/Encode/H.264
